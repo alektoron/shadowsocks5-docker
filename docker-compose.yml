@@ -1,0 +1,11 @@
+services:
+  socks5:
+    image: socks5:latest
+    container_name: socks5_proxy
+    environment:
+      - SOCKS_MODE=local
+    volumes:
+      - ./config.json:/config/config.json:ro
+    ports:
+      - "1080:1080"
+    restart: unless-stopped
