@@ -1,8 +1,7 @@
-# Build stage 
-FROM alpine:3.22.2 as builder
+FROM alpine:3.22.4 as builder
 
 # Set arguments for configuration
-ARG SOCKS_VERSION=v1.23.5
+ARG SOCKS_VERSION=${SOCKS_VERSION:-v1.24.0}
 
 # Install dependencies
 RUN apk add --no-cache tar xz wget ca-certificates && update-ca-certificates
@@ -14,11 +13,11 @@ RUN wget https://github.com/shadowsocks/shadowsocks-rust/releases/download/${SOC
     tar -xvf shadowsocks-${SOCKS_VERSION}.x86_64-unknown-linux-musl.tar.xz
 
 # Runtime stage
-FROM alpine:3.22.2
+FROM alpine:3.22.4 as runtime
 
 RUN apk add --no-cache ca-certificates && update-ca-certificates
 
-ARG SOCKS_VERSION=v1.23.5
+ARG SOCKS_VERSION=${SOCKS_VERSION:-v1.24.0}
 # Set environment variables for configuration
 ENV SOCKS_MODE=server
 ENV SOCKS_VERSION=${SOCKS_VERSION}
