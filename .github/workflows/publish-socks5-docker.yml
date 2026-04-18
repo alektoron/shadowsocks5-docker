@@ -28,16 +28,11 @@ jobs:
       - name: Get latest Shadowsocks version
         id: get-version
         run: |
-          # Change the REPO below if you use a different Shadowsocks implementation
-          # shadowsocks-rust (recommended, actively maintained)
           REPO="shadowsocks/shadowsocks-rust"
-          # Alternative example: shadowsocks-libev
-          # REPO="shadowsocks/shadowsocks-libev"
 
           LATEST_VERSION=$(curl -s "https://api.github.com/repos/${REPO}/releases/latest" \
             | jq -r '.tag_name')
 
-          # Remove leading 'v' if present (Docker tags usually don't have it, but adjust if you want)
           CLEAN_VERSION=${LATEST_VERSION#v}
 
           echo "LATEST_VERSION=${CLEAN_VERSION}" >> $GITHUB_ENV
